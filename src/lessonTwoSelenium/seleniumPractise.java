@@ -17,20 +17,19 @@ public class seleniumPractise {
 		String[] itemsNeeded = {"Cucumber","Brocolli","Beetroot"};
 		int j=0;
 		driver.get("https://rahulshettyacademy.com/seleniumPractise/");
+		Thread.sleep(3000);
 		List<WebElement> products = driver.findElements(By.cssSelector("h4.product-name"));
 		for(int i=0; i<products.size(); i++)
 		{
 			String[] name = products.get(i).getText().split("-");
 			String formattedName= name[0].trim();
 			List itemNeededList = Arrays.asList(itemsNeeded);
-			Thread.sleep(1000);
+			
 			if(itemNeededList.contains(formattedName)) {
 				j++;
-				driver.findElements(By.xpath("//button[text()='ADD TO CART']")).get(i).click();
+				driver.findElements(By.xpath("//div[@class='product-action']/button")).get(i).click();
 				if(j==itemNeededList.size())   {
-					System.out.println("çıkış");
 					break;
-					
 				}
 				
 				
