@@ -9,6 +9,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class seleniumPractise {
@@ -17,15 +19,17 @@ public class seleniumPractise {
 		// TODO Auto-generated method stub
 		System.setProperty("webdriver.chrome.driver", "C://Drivers/chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5000));
+		WebDriverWait w= new WebDriverWait(driver, Duration.ofSeconds(10));
 
 		String[] itemsNeeded = { "Cucumber", "Brocolli", "Beetroot" };
 		driver.get("https://rahulshettyacademy.com/seleniumPractise/");
 		addItems(driver, itemsNeeded);
 		driver.findElement(By.cssSelector("img[alt='Cart']")).click();
 		driver.findElement(By.cssSelector("div[class='cart-preview active'] button[type='button']")).click();
+		w.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@class='promoCode']")));
 		driver.findElement(By.xpath("//input[@class='promoCode']")).sendKeys("rahulshettyacademy");
 		driver.findElement(By.xpath("//button[@class='promoBtn']")).click();
+		w.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='promoInfo']")));
 		Assert.assertEquals(driver.findElement(By.xpath("//span[@class='promoInfo']")).getText(), "Code applied ..!") ;
 		driver.close();
 		
