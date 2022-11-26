@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 public class brokenLinks {
 
@@ -30,6 +31,8 @@ public class brokenLinks {
 		
 		
 		List <WebElement> Links = driver.findElements(By.cssSelector("li[class='gf-li'] a"));
+		SoftAssert a = new SoftAssert();
+		
 		for(WebElement Link : Links) {
 			String url = Link.getAttribute("href");
 			HttpURLConnection conn = (HttpURLConnection)new URL(url).openConnection();
@@ -37,15 +40,13 @@ public class brokenLinks {
 			conn.connect();
 			int respoenseCode = conn.getResponseCode();
 			System.out.println("status code: "+respoenseCode);
-			if(respoenseCode > 400) {
-				System.out.println("Bu "+url+" adreste ve bu "+Link.getText()+" başlıkta kırık link tespit edildi status code:"+respoenseCode);
-				Assert.assertTrue(false);
-			}
+			a.assertTrue(respoenseCode < 400, "Bu "+url+" adreste ve bu "+Link.getText()+" başlıkta kırık link tespit edildi status code:"+respoenseCode);
+			
+
 	
 			
 		}
-		System.out.println("finish control");
-		
+		a.assertAll();
 	}
 
 }
