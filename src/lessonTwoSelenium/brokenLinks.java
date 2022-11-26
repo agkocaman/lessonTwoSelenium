@@ -5,11 +5,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
+
+import java.net.HttpURLConnection;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 
 public class brokenLinks {
 
@@ -30,14 +32,19 @@ public class brokenLinks {
 		List <WebElement> Links = driver.findElements(By.cssSelector("li[class='gf-li'] a"));
 		for(WebElement Link : Links) {
 			String url = Link.getAttribute("href");
-			HttpsURLConnection conn = (HttpsURLConnection)new URL(url).openConnection();
+			HttpURLConnection conn = (HttpURLConnection)new URL(url).openConnection();
 			conn.setRequestMethod("HEAD");
 			conn.connect();
 			int respoenseCode = conn.getResponseCode();
 			System.out.println("status code: "+respoenseCode);
-			Thread.sleep(5000);
+			if(respoenseCode > 400) {
+				System.out.println("Bu "+url+" adreste ve bu "+Link.getText()+" başlıkta kırık link tespit edildi status code:"+respoenseCode);
+				Assert.assertTrue(false);
+			}
+	
 			
 		}
+		System.out.println("finish control");
 		
 	}
 
