@@ -18,10 +18,10 @@ public class test1 {
 		int count = 0;
 		for(int i=0; i<names.size(); i++) {
 			String actual = names.get(i);
-			if(actual.startsWith("A")) {
+			if(actual.startsWith("M")) {
 				count++;
 			}
 		}
-		System.out.println(count);
+		System.out.println("M harfi ile başlayan isimlerin toplamı...: "+count);
 	}
 }
