@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 
 public class test1 {
-	@Test
+	//@Test
 	public void regular() {
 		ArrayList<String> names = new ArrayList<String>();
 		names.add("Ahmet");
@@ -23,5 +23,18 @@ public class test1 {
 			}
 		}
 		System.out.println("M harfi ile başlayan isimlerin toplamı...: "+count);
+	}
+	@Test
+	public void streamFilter() {
+		ArrayList<String> names = new ArrayList<String>();
+		names.add("Ahmet");
+		names.add("Mehmet");
+		names.add("Murat");
+		names.add("Mustafa");
+		names.add("Mahmut");
+		names.add("Osman");
+		names.add("Ömer");
+		Long c = names.stream().filter(s -> s.startsWith("M")).count();
+		System.out.println("M harfi ile başlayan isimlerin toplamık...: "+c);
 	}
 }
