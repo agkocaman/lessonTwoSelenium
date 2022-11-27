@@ -32,6 +32,9 @@ public class newWindow {
 		aka.sendKeys(akademi);
 		File file = aka.getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(file, new File("deneme.png"));
+		System.out.println(aka.getRect().getDimension().getHeight());
+		System.out.println(aka.getRect().getDimension().getWidth());
+		
 	}
 
 }
