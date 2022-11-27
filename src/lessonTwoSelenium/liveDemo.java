@@ -16,11 +16,22 @@ public class liveDemo {
 		System.setProperty("webdriver.chrome.driver", "C://Drivers/chromedriver.exe");
 		ChromeDriver driver = new ChromeDriver();
 		driver.get("https://rahulshettyacademy.com/seleniumPractise/#/offers");
-		//driver.findElement(By.xpath("//th[1]")).click();
+		driver.findElement(By.xpath("//th[1]")).click();
 		List<WebElement> values = driver.findElements(By.xpath("//td[1]"));
 		List<String> orginalList = values.stream().map(s->s.getText()).collect(Collectors.toList());
 		List<String> sortedList =  orginalList.stream().sorted().collect(Collectors.toList());
 		Assert.assertTrue(orginalList.equals(sortedList));
+		
+		List<String> price = values.stream().filter(s->s.getText().contains("Banana")).
+		map(s->getPriceVeggie(s)).collect(Collectors.toList());
+		price.forEach(a-> System.out.println(a));
+		
 	}
-
+	
+	private static String getPriceVeggie(WebElement s) {
+		String priceValue = s.findElement(By.xpath("following-sibling::td[1]")).getText();
+		
+		return priceValue;
+		
+	}
 }
