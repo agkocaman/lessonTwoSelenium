@@ -21,10 +21,20 @@ public class liveDemo {
 		List<String> orginalList = values.stream().map(s->s.getText()).collect(Collectors.toList());
 		List<String> sortedList =  orginalList.stream().sorted().collect(Collectors.toList());
 		Assert.assertTrue(orginalList.equals(sortedList));
+		List<String> price;
 		
-		List<String> price = values.stream().filter(s->s.getText().contains("Banana")).
+		do {
+		List<WebElement> rows = driver.findElements(By.xpath("//td[1]"));
+		price = rows.stream().filter(s->s.getText().contains("Mango")).
 		map(s->getPriceVeggie(s)).collect(Collectors.toList());
+		
 		price.forEach(a-> System.out.println(a));
+		if(price.size()<1) {
+			driver.findElement(By.cssSelector("a[aria-label='Next']")).click();
+		}
+		}
+		while(price.size()<1);
+		
 		
 	}
 	
